@@ -1,0 +1,48 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+USE ieee.std_logic_unsigned.all;
+
+ENTITY ulamult IS
+PORT (Reset, clk, inicio : in std_logic;
+      dado: IN STD_LOGIC_VECTOR(10 DOWNTO 0);
+      flagZ, pronto: out std_logic;
+      saida: out std_logic_logic(7 downto 0));
+END ulamult;
+
+ARCHITECTURE estrutura OF ulamult IS
+signal enA, enB, enOp, enOut: in STD_LOGIC;
+
+component bo is
+    PORT (clk: in std_logic;
+        dado: IN STD_LOGIC_VECTOR(10 DOWNTO 0);
+        saida: OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
+        flagZ: OUT STD_LOGIC
+        enA, enB, enOp, enOut: in STD_LOGIC);
+  END COMPONENT;
+
+component bc is
+    PORT (Reset, clk, inicio: IN STD_LOGIC;
+      pronto: OUT STD_LOGIC;
+      enA, enB, enOp, enOut: OUT STD_LOGIC);
+END COMPONENT;
+
+BEGIN
+
+    BO1: bo port map(clk => clk,
+                     dado => dado,
+                     enA => enA,
+                     enB => enB,
+                     enOp => enOp,
+                     enOut => enOut,
+                     saida => saida,
+                     flagZ => flagZ);
+
+    BC1: bc port map(clk => clk,
+                     inicio => inicio,
+                     pronto => pronto,
+                     enA => enA,
+                     enB => enB,
+                     enOut => enOut,
+                     enOp => enOp);
+
+END estrutura;
